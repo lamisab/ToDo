@@ -51,8 +51,9 @@ class ToDoItem extends StatelessWidget {
             iconSize: 18,
             icon: Icon(Icons.delete),
             onPressed: () {
-              // print('Clicked on delete icon');
-              onDeleteItem(todo.id);
+            setState(() {
+                                //todos.removeAt(index);
+                                deleteTodo((documentSnapshot != null) ? (documentSnapshot["todoTitle"]) : "");
             },
           ),
         ),

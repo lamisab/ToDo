@@ -25,6 +25,26 @@ class _HomeState extends State<Home> {
     super.initState();
   }
 
+  createToDo() {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("MyTodos").doc(title);
+
+    Map<String, String> todoList = {"todoTitle": title};
+
+    documentReference
+        .set(todoList)
+        .whenComplete(() => print("Data stored successfully"));
+  }
+
+  deleteTodo(item) {
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection("MyTodos").doc(item);
+
+    documentReference
+        .delete()
+        .whenComplete(() => print("deleted successfully"));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -106,7 +126,11 @@ class _HomeState extends State<Home> {
                   ),
                 ),
                 onPressed: () {
-                  _addToDoItem(_todoController.text);
+                  setState(() {
+                    //todos.add(title);
+                    createToDo();
+                  });
+                  Navigator.of(context).pop();
                 },
                 style: ElevatedButton.styleFrom(
                   primary: tdBlue,
